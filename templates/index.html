@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{url_for('static', filename = 'styles_index.css') }}"/>
+    <title>{{naslov}}</title>
+    
+</head>
+    <body>
+        <div class = "kontenjer">
+            <div class ="header">
+                <div class="header-lijevo">
+                    <p>{{username}}</p>
+                    <img src="{{ url_for('static', filename='images/user-icon.png') }}" alt="User" width = "100px">
+                </div>
+    
+            <div class = "header-desno">
+            <img src="{{ url_for('static', filename='images/icon.png') }}" alt="Kucica" width = 100px>
+            </div>
+        </div>
+        <nav class = "nav">
+            <a href="{{ url_for('logout') }}">Logout</a>
+            <a href="/?id=1">Temperatura</a>
+            <a href="/?id=2">Vlaga</a>
+        </nav>
+        <div class="main">
+        <table class="table">
+            <tr>
+                <th>Vrijeme</th>
+                <th>{{% -if id_param == '1' 'Temperatura'}}
+                    {%elif %}
+                </th>
+                <th>Brisanje</th>
+            </tr>
+            {% for podatak in podaci %}
+            <tr>
+                <td>{{ podatak.datum }}</td>
+                <td>{{ podatak.vrijednost }}</td>
+                <td><Button>Obrisi</Button></td>
+            </tr>
+            {% endfor %}
+        
+           
+        </table>
+        </div>
+    </div>
+</body>
+</html>
