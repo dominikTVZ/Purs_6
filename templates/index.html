@@ -20,30 +20,28 @@
             <img src="{{ url_for('static', filename='images/icon.png') }}" alt="Kucica" width = 100px>
             </div>
         </div>
-        <nav class = "nav">
+        <nav>
             <a href="{{ url_for('logout') }}">Logout</a>
-            <a href="/?id=1">Temperatura</a>
-            <a href="/?id=2">Vlaga</a>
+            <a href="?id=1">Temperatura</a>
+            <a href="?id=2">Vlaga</a>
         </nav>
-        <div class="main">
-        <table class="table">
-            <tr>
-                <th>Vrijeme</th>
-                <th>{{% -if id_param == '1' 'Temperatura'}}
-                    {%elif %}
-                </th>
-                <th>Brisanje</th>
-            </tr>
-            {% for podatak in podaci %}
-            <tr>
-                <td>{{ podatak.datum }}</td>
-                <td>{{ podatak.vrijednost }}</td>
-                <td><Button>Obrisi</Button></td>
-            </tr>
-            {% endfor %}
-        
-           
-        </table>
+        <main>
+            <table>
+                <thead>
+                    <th>Datum</th>  
+                    <th>{{tip}}</th>
+                </thead>  
+                <tbody>
+                  
+                    {%for d in podaci%}
+                    <tr>
+                        <td >{{d.datum}}</td>
+                        <td >{{d.vrijednost}}</td>
+                    </tr>
+                    {%endfor%}
+                </tbody>   
+            </table>
+        </main>
         </div>
     </div>
 </body>

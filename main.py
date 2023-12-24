@@ -21,6 +21,8 @@ app.secret_key = '_de5jRRR83x'
 
 @app.before_request
 def before_request_func():
+    if request.path.startswith('/static'):
+        return  
     if request.path == '/login':
         return
     if session.get('username') is None:
@@ -30,21 +32,17 @@ def before_request_func():
 def index():
     global podaci_vlaga, podaci_temperatura
     id_param = request.args.get('id')
-    if id_param == '1':
-        podaci = podaci_temperatura
-    elif id_param == '2':
-        podaci  = podaci_vlaga
-    else:
-        podaci = podaci_temperatura
-    return render_template('index.html',  naslov = 'Početna stranica', username = session.get('username').capitalize(), podaci = podaci)
-
+    if id_param == '1' or id_param == None:
+        response = render_template('index.html', naslov = 'Pocetna stranica', tip = 'Temperatura', username = session.get('username').capitalize(), podaci = podaci_temperatura)
+        return response, 200
+    if id_param == '2':
+        response2 = render_template('index.html', naslov = 'Pocetna stranica', tip = 'Vlaga', username = session.get('username').capitalize(), podaci = podaci_vlaga)
+        return response2, 200
 
 @app.get('/login')
 def login():
     response = render_template('login.html',  naslov = 'Stranica za prijavu')
     return response
-
-
 
 @app.get('/logout')
 def logout():
@@ -62,7 +60,6 @@ def check():
         return redirect(url_for('index'))
     else:
         return render_template('login.html', naslov='Stranica za prijavu', poruka='Uneseni su pogresni podaci')
-
 
 
 if __name__ == '__main__':
